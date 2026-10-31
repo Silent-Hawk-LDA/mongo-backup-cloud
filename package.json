@@ -50,7 +50,7 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "mongo-backup-cloud": "./dist/cli/index.js"
+    "mongo-backup-cloud": "dist/cli/index.js"
   },
   "files": [
     "dist",
