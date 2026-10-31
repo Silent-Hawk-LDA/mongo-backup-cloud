@@ -1,0 +1,92 @@
+{
+  "name": "mongo-backup-cloud",
+  "version": "0.1.0",
+  "description": "Automated MongoDB backups to Google Drive, S3, Cloudflare R2, Backblaze B2, Dropbox and local storage, with encryption, retention and scheduling.",
+  "keywords": [
+    "mongodb",
+    "backup",
+    "restore",
+    "s3",
+    "google-drive",
+    "cloudflare-r2",
+    "backblaze",
+    "dropbox",
+    "mongodump",
+    "mongorestore",
+    "cron"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Silent Hawk LDA",
+    "url": "https://shwk.eu"
+  },
+  "maintainers": [
+    {
+      "name": "Silent Hawk LDA",
+      "url": "https://shwk.eu"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Silent-Hawk-LDA/mongo-backup-cloud.git"
+  },
+  "homepage": "https://github.com/Silent-Hawk-LDA/mongo-backup-cloud#readme",
+  "bugs": {
+    "url": "https://github.com/Silent-Hawk-LDA/mongo-backup-cloud/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "mongo-backup-cloud": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm run build && npm pack --dry-run"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "node-cron": "^3.0.3"
+  },
+  "optionalDependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@aws-sdk/lib-storage": "^3.1161.0",
+    "dropbox": "^10.34.0",
+    "googleapis": "^140.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/node-cron": "^3.0.11",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3",
+    "tsup": "^8.2.4",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  }
+}

@@ -1,0 +1,12 @@
+src/
+tests/
+examples/
+docs/
+.github/
+*.config.ts
+tsconfig.json
+vitest.config.ts
+.eslintrc*
+.prettierrc*
+*.tgz
+.DS_Store
