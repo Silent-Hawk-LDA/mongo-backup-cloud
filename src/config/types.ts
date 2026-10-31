@@ -50,6 +50,37 @@ export interface BackblazeB2StorageConfig {
   required?: boolean;
 }
 
+export interface DigitalOceanSpacesStorageConfig {
+  provider: "digitalocean-spaces";
+  bucket: string;
+  region: string;
+  prefix?: string;
+  credentials: {
+    accessKeyId: string;
+    secretAccessKey: string;
+  };
+  required?: boolean;
+}
+
+export interface GoogleCloudStorageConfig {
+  provider: "google-cloud-storage";
+  bucket: string;
+  credentials: string | Record<string, unknown>;
+  prefix?: string;
+  projectId?: string;
+  required?: boolean;
+}
+
+export interface AzureBlobStorageConfig {
+  provider: "azure-blob";
+  container: string;
+  prefix?: string;
+  connectionString?: string;
+  accountName?: string;
+  accountKey?: string;
+  required?: boolean;
+}
+
 export interface GoogleDriveStorageConfig {
   provider: "google-drive";
   credentials: string | Record<string, unknown>;
@@ -69,6 +100,9 @@ export type StorageConfig =
   | S3StorageConfig
   | CloudflareR2StorageConfig
   | BackblazeB2StorageConfig
+  | DigitalOceanSpacesStorageConfig
+  | GoogleCloudStorageConfig
+  | AzureBlobStorageConfig
   | GoogleDriveStorageConfig
   | DropboxStorageConfig;
 

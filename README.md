@@ -26,10 +26,13 @@ Automated MongoDB backups to multiple cloud storage providers, with encryption, 
 | Amazon S3 | `@aws-sdk/client-s3`, `@aws-sdk/lib-storage` | IAM role or access key/secret |
 | Cloudflare R2 | `@aws-sdk/client-s3`, `@aws-sdk/lib-storage` | S3-compatible |
 | Backblaze B2 | `@aws-sdk/client-s3`, `@aws-sdk/lib-storage` | S3-compatible |
+| DigitalOcean Spaces | `@aws-sdk/client-s3`, `@aws-sdk/lib-storage` | S3-compatible |
+| Google Cloud Storage | `@google-cloud/storage` | Service Account authentication |
+| Azure Blob Storage | `@azure/storage-blob` | Connection string or account name/key |
 | Google Drive | `googleapis` | Service Account authentication |
 | Dropbox | `dropbox` | Access-token authentication |
 
-Each provider's SDK is an **optional dependency** — install only what you use.
+Each provider's SDK is an **optional dependency** — install only what you use. Other S3-compatible services (MinIO, Wasabi, Linode/Akamai Object Storage, Oracle Cloud Object Storage, etc.) work with the `s3` provider too — just point `endpoint` at that service and set `forcePathStyle` if it requires path-style URLs.
 
 ## Installation
 
@@ -40,7 +43,9 @@ npm install @silent-hawk/mongo-backup-cloud
 Install the SDK for any cloud provider you use:
 
 ```bash
-npm install @aws-sdk/client-s3 @aws-sdk/lib-storage   # S3, Cloudflare R2, Backblaze B2
+npm install @aws-sdk/client-s3 @aws-sdk/lib-storage   # S3, Cloudflare R2, Backblaze B2, DigitalOcean Spaces, other S3-compatible services
+npm install @google-cloud/storage                      # Google Cloud Storage
+npm install @azure/storage-blob                        # Azure Blob Storage
 npm install googleapis                                 # Google Drive
 npm install dropbox                                     # Dropbox
 ```
@@ -176,6 +181,32 @@ Google Drive authenticates with a **Service Account**, not your personal Google 
 3. Copy the generated **keyID** (→ `credentials.accessKeyId`) and **applicationKey** (→ `credentials.secretAccessKey`) — shown once.
 4. On the bucket's details page, note its **Endpoint** (e.g. `s3.us-west-004.backblazeb2.com`) and the region implied by it (e.g. `us-west-004`) — these map to `storage.endpoint` (prefix with `https://`) and `storage.region`.
 
+### DigitalOcean Spaces
+
+1. Open the [DigitalOcean Control Panel](https://cloud.digitalocean.com/) → **Spaces Object Storage → Create a Space**. Note the Space's name and region (e.g. `nyc3`) — these are `storage.bucket` and `storage.region`.
+2. Go to **API → Spaces Keys → Generate New Key**. Copy the generated **Access Key** and **Secret Key** — shown once.
+3. Spaces uses the same key pair across all your Spaces in that account; scope access at the DigitalOcean account/team level if you need isolation.
+
+### Google Cloud Storage
+
+Like Google Drive, this authenticates with a **Service Account**.
+
+1. Open the [Google Cloud Console](https://console.cloud.google.com/) and select or create a project.
+2. Go to **APIs & Services → Library**, search for **Cloud Storage API**, and click **Enable** (usually already enabled).
+3. Go to **Cloud Storage → Buckets → Create**. Note the bucket name — this is `storage.bucket`.
+4. Go to **IAM & Admin → Service Accounts → Create Service Account**. Grant it the **Storage Object Admin** role, scoped to the bucket if you want tighter permissions (via the bucket's own **Permissions** tab instead of a project-wide role).
+5. Open the service account → **Keys** tab → **Add Key → Create new key → JSON**. This downloads a credentials file — this is your `storage.credentials` value (pass the file path, or its parsed JSON contents).
+6. Note your **Project ID** (visible on the Cloud Console dashboard) if you want to set `storage.projectId` explicitly; it's otherwise inferred from the credentials.
+
+### Azure Blob Storage
+
+1. Open the [Azure Portal](https://portal.azure.com/) → **Storage accounts → Create**. Note the storage account name.
+2. Inside the storage account, go to **Data storage → Containers → + Container** to create the destination container — this is `storage.container`.
+3. Go to **Security + networking → Access keys**. Either:
+   - Copy the **Connection string** directly — this is `storage.connectionString` (simplest option), or
+   - Copy the **Storage account name** and one of the **Key** values separately — these map to `storage.accountName` and `storage.accountKey`.
+4. Scope access more tightly in production using a **Shared Access Signature (SAS)** token or an Azure AD role assignment instead of a full account key, if your deployment requires it.
+
 ### Dropbox
 
 1. Go to the [Dropbox App Console](https://www.dropbox.com/developers/apps) → **Create app**.
@@ -238,6 +269,53 @@ storage: {
     accessKeyId: process.env.B2_KEY_ID,
     secretAccessKey: process.env.B2_APPLICATION_KEY
   }
+}
+```
+
+## DigitalOcean Spaces Configuration
+
+```typescript
+storage: {
+  provider: "digitalocean-spaces",
+  bucket: "mongodb-backups",
+  region: "nyc3",
+  credentials: {
+    accessKeyId: process.env.DO_SPACES_ACCESS_KEY,
+    secretAccessKey: process.env.DO_SPACES_SECRET_KEY
+  }
+}
+```
+
+## Google Cloud Storage Configuration
+
+```typescript
+storage: {
+  provider: "google-cloud-storage",
+  bucket: "mongodb-backups",
+  credentials: "./gcs-service-account.json" // path, or the parsed JSON object
+}
+```
+
+## Azure Blob Storage Configuration
+
+Using a connection string:
+
+```typescript
+storage: {
+  provider: "azure-blob",
+  container: "mongodb-backups",
+  connectionString: process.env.AZURE_STORAGE_CONNECTION_STRING
+}
+```
+
+Or an account name/key pair:
+
+```typescript
+storage: {
+  provider: "azure-blob",
+  container: "mongodb-backups",
+  accountName: process.env.AZURE_STORAGE_ACCOUNT,
+  accountKey: process.env.AZURE_STORAGE_KEY
 }
 ```
 

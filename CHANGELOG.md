@@ -2,7 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.0] - Unreleased
+## [Unreleased]
+
+### Added
+
+- Storage providers: DigitalOcean Spaces (S3-compatible), Google Cloud Storage, Azure Blob Storage (connection string or account name/key).
+- Documented using the `s3` provider directly against other S3-compatible services (MinIO, Wasabi, Linode/Akamai Object Storage, Oracle Cloud Object Storage, etc.).
+
+### Fixed
+
+- `dropbox` optional dependency pinned to `10.34.0`; newer releases require Node `>=22` and were silently skipped by `npm ci` on Node 20, breaking typecheck/build.
+- Dropped a leading `./` from the `bin` path to avoid a misleading npm publish-time normalization warning (the entry was never actually broken).
+- README badges and title updated to the scoped package name so they resolve correctly.
+
+## [0.1.0] - 2026-10-31
 
 ### Changed
 

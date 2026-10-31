@@ -5,6 +5,9 @@ import { LocalStorageProvider } from "./local/local-provider.js";
 import { S3StorageProvider } from "./s3/s3-provider.js";
 import { CloudflareR2Provider } from "./cloudflare-r2/r2-provider.js";
 import { BackblazeB2Provider } from "./backblaze/b2-provider.js";
+import { DigitalOceanSpacesProvider } from "./digitalocean-spaces/do-spaces-provider.js";
+import { GoogleCloudStorageProvider } from "./google-cloud-storage/gcs-provider.js";
+import { AzureBlobProvider } from "./azure-blob/azure-blob-provider.js";
 import { GoogleDriveProvider } from "./google-drive/google-drive-provider.js";
 import { DropboxProvider } from "./dropbox/dropbox-provider.js";
 
@@ -26,6 +29,23 @@ export function createStorageProvider(config: StorageConfig): StorageProvider {
       return new CloudflareR2Provider(config);
     case "backblaze-b2":
       return new BackblazeB2Provider(config);
+    case "digitalocean-spaces":
+      return new DigitalOceanSpacesProvider(config);
+    case "google-cloud-storage":
+      return new GoogleCloudStorageProvider({
+        bucket: config.bucket,
+        credentials: config.credentials,
+        prefix: config.prefix,
+        projectId: config.projectId
+      });
+    case "azure-blob":
+      return new AzureBlobProvider({
+        container: config.container,
+        prefix: config.prefix,
+        connectionString: config.connectionString,
+        accountName: config.accountName,
+        accountKey: config.accountKey
+      });
     case "google-drive":
       return new GoogleDriveProvider({ credentials: config.credentials, folderId: config.folderId });
     case "dropbox":
@@ -40,6 +60,9 @@ export const SUPPORTED_PROVIDER_NAMES = [
   "s3",
   "cloudflare-r2",
   "backblaze-b2",
+  "digitalocean-spaces",
+  "google-cloud-storage",
+  "azure-blob",
   "google-drive",
   "dropbox"
 ] as const;

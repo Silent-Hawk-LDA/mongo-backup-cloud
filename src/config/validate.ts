@@ -6,6 +6,9 @@ const SUPPORTED_PROVIDERS = [
   "s3",
   "cloudflare-r2",
   "backblaze-b2",
+  "digitalocean-spaces",
+  "google-cloud-storage",
+  "azure-blob",
   "google-drive",
   "dropbox"
 ];
@@ -35,6 +38,25 @@ function validateStorageConfig(storage: StorageConfig): void {
       if (!storage.bucket || !storage.endpoint || !storage.credentials) {
         throw new ConfigError(
           "Backblaze B2 storage requires `bucket`, `endpoint` and `credentials`."
+        );
+      }
+      break;
+    case "digitalocean-spaces":
+      if (!storage.bucket || !storage.region || !storage.credentials) {
+        throw new ConfigError(
+          "DigitalOcean Spaces storage requires `bucket`, `region` and `credentials`."
+        );
+      }
+      break;
+    case "google-cloud-storage":
+      if (!storage.bucket || !storage.credentials) {
+        throw new ConfigError("Google Cloud Storage requires `bucket` and `credentials`.");
+      }
+      break;
+    case "azure-blob":
+      if (!storage.container || (!storage.connectionString && !(storage.accountName && storage.accountKey))) {
+        throw new ConfigError(
+          "Azure Blob storage requires `container`, and either `connectionString` or both `accountName` and `accountKey`."
         );
       }
       break;

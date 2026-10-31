@@ -38,4 +38,85 @@ describe("validateConfig", () => {
     delete process.env.BACKUP_ENCRYPTION_KEY;
     expect(() => validateConfig({ ...baseConfig, encryption: { enabled: true } })).toThrow(ConfigError);
   });
+
+  it("accepts a valid DigitalOcean Spaces config", () => {
+    expect(() =>
+      validateConfig({
+        ...baseConfig,
+        storage: {
+          provider: "digitalocean-spaces",
+          bucket: "my-space",
+          region: "nyc3",
+          credentials: { accessKeyId: "id", secretAccessKey: "secret" }
+        }
+      })
+    ).not.toThrow();
+  });
+
+  it("rejects DigitalOcean Spaces without credentials", () => {
+    expect(() =>
+      validateConfig({
+        ...baseConfig,
+        storage: { provider: "digitalocean-spaces", bucket: "my-space", region: "nyc3" } as unknown as MongoBackupConfig["storage"]
+      })
+    ).toThrow(ConfigError);
+  });
+
+  it("accepts a valid Google Cloud Storage config", () => {
+    expect(() =>
+      validateConfig({
+        ...baseConfig,
+        storage: {
+          provider: "google-cloud-storage",
+          bucket: "my-bucket",
+          credentials: { client_email: "a@b.iam.gserviceaccount.com", private_key: "x" }
+        }
+      })
+    ).not.toThrow();
+  });
+
+  it("rejects Google Cloud Storage without a bucket", () => {
+    expect(() =>
+      validateConfig({
+        ...baseConfig,
+        storage: { provider: "google-cloud-storage", credentials: {} } as unknown as MongoBackupConfig["storage"]
+      })
+    ).toThrow(ConfigError);
+  });
+
+  it("accepts a valid Azure Blob config using a connection string", () => {
+    expect(() =>
+      validateConfig({
+        ...baseConfig,
+        storage: {
+          provider: "azure-blob",
+          container: "backups",
+          connectionString: "DefaultEndpointsProtocol=https;AccountName=x;AccountKey=y;EndpointSuffix=core.windows.net"
+        }
+      })
+    ).not.toThrow();
+  });
+
+  it("accepts a valid Azure Blob config using account name/key", () => {
+    expect(() =>
+      validateConfig({
+        ...baseConfig,
+        storage: {
+          provider: "azure-blob",
+          container: "backups",
+          accountName: "myaccount",
+          accountKey: "key"
+        }
+      })
+    ).not.toThrow();
+  });
+
+  it("rejects Azure Blob without connection string or account credentials", () => {
+    expect(() =>
+      validateConfig({
+        ...baseConfig,
+        storage: { provider: "azure-blob", container: "backups" } as unknown as MongoBackupConfig["storage"]
+      })
+    ).toThrow(ConfigError);
+  });
 });
