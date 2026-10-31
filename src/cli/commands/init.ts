@@ -2,7 +2,7 @@ import { writeFile, access } from "node:fs/promises";
 import { join } from "node:path";
 import { generateEncryptionKey } from "../../encryption/aes.js";
 
-const TEMPLATE = `/** @type {import("mongo-backup-cloud").MongoBackupConfig} */
+const TEMPLATE = `/** @type {import("@silent-hawk/mongo-backup-cloud").MongoBackupConfig} */
 export default {
   mongodb: {
     uri: process.env.MONGODB_URI,

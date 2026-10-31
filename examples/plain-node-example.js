@@ -1,4 +1,4 @@
-const { MongoBackup } = require("mongo-backup-cloud");
+const { MongoBackup } = require("@silent-hawk/mongo-backup-cloud");
 
 async function main() {
   const backup = new MongoBackup({

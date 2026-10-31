@@ -34,7 +34,7 @@ Each provider's SDK is an **optional dependency** — install only what you use.
 ## Installation
 
 ```bash
-npm install mongo-backup-cloud
+npm install @silent-hawk/mongo-backup-cloud
 ```
 
 Install the SDK for any cloud provider you use:
@@ -59,7 +59,7 @@ Local storage requires no additional packages.
 ## Quick Start
 
 ```bash
-npm install mongo-backup-cloud
+npm install @silent-hawk/mongo-backup-cloud
 npx mongo-backup-cloud init
 ```
 
@@ -80,7 +80,7 @@ or use a package like [`dotenv`](https://www.npmjs.com/package/dotenv)/[`dotenv-
 ## TypeScript Example
 
 ```typescript
-import { MongoBackup } from "mongo-backup-cloud";
+import { MongoBackup } from "@silent-hawk/mongo-backup-cloud";
 
 const backup = new MongoBackup({
   mongodb: {
@@ -108,7 +108,7 @@ await backup.start();
 ## JavaScript Example
 
 ```javascript
-const { MongoBackup } = require("mongo-backup-cloud");
+const { MongoBackup } = require("@silent-hawk/mongo-backup-cloud");
 
 const backup = new MongoBackup({
   mongodb: {
@@ -321,7 +321,7 @@ npx mongo-backup-cloud init   # prints a generated key
 ```
 
 ```typescript
-import { generateEncryptionKey } from "mongo-backup-cloud";
+import { generateEncryptionKey } from "@silent-hawk/mongo-backup-cloud";
 console.log(generateEncryptionKey());
 ```
 
@@ -372,7 +372,7 @@ The CLI reads `mongo-backup-cloud.config.js`/`.mjs`/`.json` from the current dir
 
 ```typescript
 import express from "express";
-import { MongoBackup } from "mongo-backup-cloud";
+import { MongoBackup } from "@silent-hawk/mongo-backup-cloud";
 
 const app = express();
 const backup = new MongoBackup({
@@ -392,7 +392,7 @@ app.post("/admin/backup", async (_req, res) => {
 
 ```typescript
 import { Injectable, OnModuleInit, OnModuleDestroy } from "@nestjs/common";
-import { MongoBackup } from "mongo-backup-cloud";
+import { MongoBackup } from "@silent-hawk/mongo-backup-cloud";
 
 @Injectable()
 export class BackupService implements OnModuleInit, OnModuleDestroy {
@@ -455,7 +455,7 @@ backup.on("cleanup:complete", ({ deletedBackupIds }) => console.log("deleted", d
 All errors extend `MongoBackupError` and carry a `code`:
 
 ```typescript
-import { MongoBackupError, ChecksumMismatchError } from "mongo-backup-cloud";
+import { MongoBackupError, ChecksumMismatchError } from "@silent-hawk/mongo-backup-cloud";
 
 try {
   await backup.restore({ backupId: "...", confirm: true });

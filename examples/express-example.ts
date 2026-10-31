@@ -1,5 +1,5 @@
 import express from "express";
-import { MongoBackup } from "mongo-backup-cloud";
+import { MongoBackup } from "@silent-hawk/mongo-backup-cloud";
 
 const app = express();
 

@@ -1,5 +1,5 @@
 {
-  "name": "mongo-backup-cloud",
+  "name": "@silent-hawk/mongo-backup-cloud",
   "version": "0.1.0",
   "description": "Automated MongoDB backups to Google Drive, S3, Cloudflare R2, Backblaze B2, Dropbox and local storage, with encryption, retention and scheduling.",
   "keywords": [
@@ -33,6 +33,9 @@
   "homepage": "https://github.com/Silent-Hawk-LDA/mongo-backup-cloud#readme",
   "bugs": {
     "url": "https://github.com/Silent-Hawk-LDA/mongo-backup-cloud/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "type": "module",
   "main": "./dist/index.cjs",

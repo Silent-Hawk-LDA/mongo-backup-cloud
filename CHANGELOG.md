@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.0] - Unreleased
 
+### Changed
+
+- Package renamed from `mongo-backup-cloud` to the scoped `@silent-hawk/mongo-backup-cloud` ahead of first publish. The CLI binary name (`mongo-backup-cloud`) and config filenames are unaffected.
+
 ### Added
 
 - Initial release: core backup/restore engine built on `mongodump`/`mongorestore`.
