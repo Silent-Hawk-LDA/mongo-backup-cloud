@@ -1,7 +1,7 @@
 {
   "name": "@silent-hawk/mongo-backup-cloud",
-  "version": "0.1.0",
-  "description": "Automated MongoDB backups to Google Drive, S3, Cloudflare R2, Backblaze B2, Dropbox and local storage, with encryption, retention and scheduling.",
+  "version": "0.2.0",
+  "description": "Automated MongoDB backups to S3, Cloudflare R2, Backblaze B2, DigitalOcean Spaces, Google Cloud Storage, Azure Blob Storage, Google Drive, Dropbox and local storage, with encryption, retention and scheduling.",
   "keywords": [
     "mongodb",
     "backup",
@@ -10,6 +10,9 @@
     "google-drive",
     "cloudflare-r2",
     "backblaze",
+    "digitalocean-spaces",
+    "google-cloud-storage",
+    "azure-blob-storage",
     "dropbox",
     "mongodump",
     "mongorestore",

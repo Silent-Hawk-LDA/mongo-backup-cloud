@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.2.0] - 2026-10-31
 
 ### Added
 
@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - `dropbox` optional dependency pinned to `10.34.0`; newer releases require Node `>=22` and were silently skipped by `npm ci` on Node 20, breaking typecheck/build.
+- `@azure/storage-blob`'s own transitive dependencies pinned via npm `overrides` (`core-rest-pipeline`, `core-util`, `core-client`, `core-xml`, `logger`, `core-tracing`, `core-paging`, `core-http-compat`, `core-auth`, `abort-controller`, `storage-common`, `@typespec/ts-http-runtime`) — several had independently bumped to require Node `>=22`, which caused npm to silently skip installing the whole package on Node 20.
 - Dropped a leading `./` from the `bin` path to avoid a misleading npm publish-time normalization warning (the entry was never actually broken).
 - README badges and title updated to the scoped package name so they resolve correctly.
 
