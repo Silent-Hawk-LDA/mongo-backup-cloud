@@ -506,6 +506,10 @@ Available error classes: `ConfigError`, `MongoToolError`, `StorageProviderError`
 4. Keep new storage providers behind the `StorageProvider` interface and as optional dependencies.
 5. Update this README and `CHANGELOG.md` for user-facing changes.
 
+## Maintainers
+
+[Silent Hawk LDA](https://shwk.eu)
+
 ## License
 
 MIT — see [LICENSE](./LICENSE).
