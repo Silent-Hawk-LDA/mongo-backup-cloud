@@ -1,10 +1,10 @@
-# mongo-backup-cloud
+# @silent-hawk/mongo-backup-cloud
 
 Automated MongoDB backups to multiple cloud storage providers, with encryption, retention policies, scheduling and a CLI — built for Node.js and TypeScript projects.
 
-[![npm version](https://img.shields.io/npm/v/mongo-backup-cloud.svg)](https://www.npmjs.com/package/mongo-backup-cloud)
-[![npm downloads](https://img.shields.io/npm/dm/mongo-backup-cloud.svg)](https://www.npmjs.com/package/mongo-backup-cloud)
-[![license](https://img.shields.io/npm/l/mongo-backup-cloud.svg)](./LICENSE)
+[![npm version](https://img.shields.io/npm/v/@silent-hawk/mongo-backup-cloud.svg)](https://www.npmjs.com/package/@silent-hawk/mongo-backup-cloud)
+[![npm downloads](https://img.shields.io/npm/dm/@silent-hawk/mongo-backup-cloud.svg)](https://www.npmjs.com/package/@silent-hawk/mongo-backup-cloud)
+[![license](https://img.shields.io/npm/l/@silent-hawk/mongo-backup-cloud.svg)](./LICENSE)
 [![build](https://github.com/Silent-Hawk-LDA/mongo-backup-cloud/actions/workflows/ci.yml/badge.svg)](https://github.com/Silent-Hawk-LDA/mongo-backup-cloud/actions/workflows/ci.yml)
 
 ## Key Features
